@@ -71,7 +71,7 @@ Rails.application.configure do
   # Send timeout exceptions to tmail
   config.middleware.use ExceptionNotification::Rack, email: {
     email_prefix: '[Exception - Spock] ',
-    sender_address: %{"no-reply" <no-reply@spock.com>},
+    sender_address: ENV['EXCEPTION_NOTIFICATION_SENDER'],
     exception_recipients: [ ENV['EXCEPTION_NOTIFICATION_EMAIL'] ]
   }
 
