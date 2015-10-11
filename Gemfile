@@ -36,6 +36,9 @@ gem 'activeadmin', github: 'activeadmin'
 # Rack timout
 gem 'rack-timeout'
 
+# Exception notifications
+gem 'exception_notification'
+
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
