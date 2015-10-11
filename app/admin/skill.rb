@@ -8,6 +8,9 @@ ActiveAdmin.register Skill do
     id_column
 
     column :name
+    column :members do |skill|
+      status_tag :gray, label: skill.members.count
+    end
 
     actions
   end
@@ -27,6 +30,14 @@ ActiveAdmin.register Skill do
       row :id
       row :name
       row :created_at
+    end
+  end
+
+  sidebar 'Members', only: :show do
+    table_for skill.members do
+      column :name do |member|
+        link_to(member.name, member_path(member))
+      end
     end
   end
 end

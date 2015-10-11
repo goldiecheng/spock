@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20151002222628) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -35,10 +38,10 @@ ActiveRecord::Schema.define(version: 20151002222628) do
     t.datetime "updated_at",                          null: false
   end
 
-  add_index "admin_users", ["confirmation_token"], name: "index_admin_users_on_confirmation_token", unique: true
-  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true
-  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
-  add_index "admin_users", ["unlock_token"], name: "index_admin_users_on_unlock_token", unique: true
+  add_index "admin_users", ["confirmation_token"], name: "index_admin_users_on_confirmation_token", unique: true, using: :btree
+  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
+  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
+  add_index "admin_users", ["unlock_token"], name: "index_admin_users_on_unlock_token", unique: true, using: :btree
 
   create_table "epics", force: :cascade do |t|
     t.string   "name"
@@ -53,8 +56,8 @@ ActiveRecord::Schema.define(version: 20151002222628) do
     t.integer "member_id"
   end
 
-  add_index "epics_members", ["epic_id"], name: "index_epics_members_on_epic_id"
-  add_index "epics_members", ["member_id"], name: "index_epics_members_on_member_id"
+  add_index "epics_members", ["epic_id"], name: "index_epics_members_on_epic_id", using: :btree
+  add_index "epics_members", ["member_id"], name: "index_epics_members_on_member_id", using: :btree
 
   create_table "estimates", force: :cascade do |t|
     t.integer  "days"
@@ -65,11 +68,13 @@ ActiveRecord::Schema.define(version: 20151002222628) do
   end
 
   create_table "members", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.integer  "skill_id",   null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",       default: "", null: false
+    t.integer  "skill_id",   default: 0,  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
+
+  add_index "members", ["name"], name: "index_members_on_name", unique: true, using: :btree
 
   create_table "projects", force: :cascade do |t|
     t.string   "name"
@@ -79,11 +84,12 @@ ActiveRecord::Schema.define(version: 20151002222628) do
   end
 
   create_table "skills", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",       default: "", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
-  add_index "skills", ["name"], name: "index_skills_on_name"
+  add_index "skills", ["name"], name: "index_skills_on_name", unique: true, using: :btree
 
+  add_foreign_key "members", "skills", on_delete: :nullify
 end
