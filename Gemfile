@@ -56,6 +56,9 @@ group :production, :staging do
   # Use postgresql as the database for Active Record
   gem 'pg'
 
+  # New Relic
+  gem 'newrelic_rpm'
+
   # Email
   gem 'postmark-rails'
 
