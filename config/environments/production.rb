@@ -64,6 +64,20 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
+  # Email settings
+  config.action_mailer.delivery_method = :postmark
+  config.action_mailer.postmark_settings = { :api_token => ENV['POSTMARK_API_TOKEN'] }
+
+  # Send timeout exceptions to tmail
+  config.middleware.use ExceptionNotification::Rack, :email => {
+    :email_prefix => "[Exception - Spock] ",
+    :sender_address => %{"no-reply" <no-reply@spock.com>},
+    :exception_recipients => [ENV['EXCEPTION_NOTIFICATION_EMAIL']]
+  }
+
+  # Mail link url
+  config.action_mailer.default_url_options = { :host => 'floating-journey-1358.herokuapp.com' }
+
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true

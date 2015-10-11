@@ -49,3 +49,7 @@ group :development do
   gem 'spring'
 end
 
+group :production, :staging do
+  # Email
+  gem 'postmark-rails'
+end
