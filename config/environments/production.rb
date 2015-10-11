@@ -66,7 +66,7 @@ Rails.application.configure do
 
   # Email settings
   config.action_mailer.delivery_method = :postmark
-  config.action_mailer.postmark_settings = { :api_token => ENV['POSTMARK_API_TOKEN'] }
+  config.action_mailer.postmark_settings = { :api_token => Rails.application.secrets.postmark_api_token }
 
   # Send timeout exceptions to tmail
   config.middleware.use ExceptionNotification::Rack, :email => {
