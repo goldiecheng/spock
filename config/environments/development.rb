@@ -19,18 +19,18 @@ Rails.application.configure do
   # MailTrap
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :user_name => Rails.application.secrets.mail_trap_user_name,
-    :password => Rails.application.secrets.mail_trap_password,
-    :address => 'mailtrap.io',
-    :domain => 'mailtrap.io',
-    :port => '2525',
-    :authentication => :cram_md5
+    user_name: ENV['MAIL_TRAP_USER_NAME'],
+    password: ENV['MAIL_TRAP_PASSWORD'],
+    address: 'mailtrap.io',
+    domain: 'mailtrap.io',
+    port: '2525',
+    authentication: :cram_md5
   }
 
   # Mail link url
   config.action_mailer.default_url_options = {
-    :host => 'localhost',
-    :port => 3000
+    host: 'localhost',
+    port: 3000
   }
 
   # Print deprecation notices to the Rails logger.
