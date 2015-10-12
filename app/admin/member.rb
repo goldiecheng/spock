@@ -1,16 +1,36 @@
 ActiveAdmin.register Member do
+  permit_params :name, :skill_id
 
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-#
-permit_params :name, :skill_id
-#
-# or
-#
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if resource.something?
-#   permitted
-# end
+  menu priority: 2
 
+  index do
+    selectable_column
+    id_column
+
+    column :name
+    column :skill
+
+    actions
+  end
+
+  filter :name
+  filter :skill
+
+  form do |f|
+    f.inputs 'Skill Details' do
+      f.input :name
+      f.input :skill
+    end
+
+    f.actions
+  end
+
+  show do
+    attributes_table do
+      row :id
+      row :name
+      row :skill
+      row :created_at
+    end
+  end
 end
